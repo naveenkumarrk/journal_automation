@@ -1,33 +1,29 @@
-name: Send Email
+name: Send Weekly Journal Emails
 
 on:
   schedule:
-   - cron: "27 22 * * 2"
+    - cron: "45 22 * * 2" # Run every Saturday at 8:00 AM
 
 jobs:
-  send_email:
+  send_emails:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.x
-
-      - name: Checkout repository
-        uses: actions/checkout@v2
+          python-version: 3.8
 
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install requests smtplib pytz pandas python-dotenv
+        run: pip install -r requirements.txt
 
-      - name: Run script to send email
-        run: python journal.py
+      - name: Execute script
+        run: python send_emails.py
         env:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
           SPRINGER_API_KEY: ${{ secrets.SPRINGER_API_KEY }}
           IEEE_API_KEY: ${{ secrets.IEEE_API_KEY }}
-
-      # You can add additional steps as needed
