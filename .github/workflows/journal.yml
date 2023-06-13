@@ -2,7 +2,7 @@ name: Send Weekly Journal Emails
 
 on:
   schedule:
-    - cron: "45 22 * * 2" # Run every Saturday at 8:00 AM
+   - cron: "39 22 * * 2"
 
 jobs:
   send_emails:
