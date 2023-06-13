@@ -2,7 +2,7 @@ name: Send Journal Emails
 
 on:
   schedule:
-    - cron: "10 0 * * 3"  # Run every Saturday at 8:00 AM (UTC time)
+    - cron: "13 0 * * 3"  # Run every Saturday at 8:00 AM (UTC time)
 
 jobs:
   send_mail:
@@ -18,7 +18,7 @@ jobs:
           python-version: 3.8
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install Requests==2.31.0
 
       - name: Run Journal Script
         env:
