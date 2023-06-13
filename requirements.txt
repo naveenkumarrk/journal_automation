@@ -1,3 +1,8 @@
-Requests==2.31.0
-setuptools==63.2.0
-# sqlite3== 5.1.6
+requests
+smtplib
+email
+datetime
+dotenv
+sqlite3
+random
+csv
