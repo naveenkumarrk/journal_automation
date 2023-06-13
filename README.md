@@ -52,5 +52,5 @@ The application should now be running at http://localhost:3000.
 2.Follow the on-screen instructions to register your interests.
 3.You will receive weekly email updates with journal papers related to your interests.
 
-##License
+## License
 This project is licensed under the MIT License.
