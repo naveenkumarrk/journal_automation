@@ -2,7 +2,7 @@ name: Send Email
 
 on:
   schedule:
-    - cron: "0 0 * * 6"  # Run every Saturday at midnight UTC (adjust as needed)
+   - cron: "27 2 * * 2"
 
 jobs:
   send_email:
@@ -23,7 +23,7 @@ jobs:
           pip install requests smtplib pytz pandas python-dotenv
 
       - name: Run script to send email
-        run: python path/to/your/script.py
+        run: python journal.py
         env:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
