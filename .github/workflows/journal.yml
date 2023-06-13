@@ -2,7 +2,7 @@ name: Send Weekly Journal Emails
 
 on:
   schedule:
-   - cron: "39 22 * * 2"
+   - cron: "48 22 * * 2"
 
 jobs:
   send_emails:
@@ -26,4 +26,4 @@ jobs:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
           SPRINGER_API_KEY: ${{ secrets.SPRINGER_API_KEY }}
-          IEEE_API_KEY: ${{ secrets.IEEE_API_KEY }}
+          
