@@ -2,7 +2,7 @@ name: Run Journal Script
 
 on:
   schedule:
-   - cron: "20 17 * * 2"
+   - cron: "20 21 * * 2"
 
 jobs:
   run_script:
