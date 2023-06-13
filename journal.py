@@ -1,6 +1,8 @@
 import requests
 import os
 import smtplib
+import pandas as pd
+import pytz
 from email.message import EmailMessage
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
@@ -49,8 +51,8 @@ def check_sent_journals(email, journal_name):
 
 # Retrieve user data from the website's database
 def retrieve_user_data():
-    cursor = conn.execute("SELECT email, interest FROM users")
-    return cursor.fetchall()
+    users_data = pd.read_csv('users.csv')
+    return users_data[['email', 'interest']].values.tolist()
 
 
 # Load subscribers' email and interest from the website's database
