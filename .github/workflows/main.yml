@@ -2,27 +2,27 @@ name: Send Journal Emails
 
 on:
   schedule:
-    - cron: "08 0 * * 2"  # Run every Saturday at 8:00 AM (UTC time)
+    - cron: "10 0 * * 3"  # Run every Saturday at 8:00 AM (UTC time)
 
 jobs:
   send_mail:
     runs-on: ubuntu-latest
     
-    # steps:
-    #   - name: Checkout code
-    #     uses: actions/checkout@v2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    #   - name: Set up Python
-    #     uses: actions/setup-python@v2
-    #     with:
-    #       python-version: 3.8
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
 
-    #   - name: Install dependencies
-    #     run: pip install -r requirements.txt
+      - name: Install dependencies
+        run: pip install -r requirements.txt
 
-    #   - name: Run Journal Script
-    #     env:
-    #       EMAIL_USER: ${{ secrets.EMAIL_USER }}
-    #       EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-    #       SPRINGER_API_KEY: ${{ secrets.SPRINGER_API_KEY }}
+      - name: Run Journal Script
+        env:
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          SPRINGER_API_KEY: ${{ secrets.SPRINGER_API_KEY }}
         run: python journal.py
