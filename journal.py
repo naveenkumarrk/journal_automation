@@ -1,13 +1,12 @@
 import requests
 import os
 import smtplib
-import pandas as pd
-import pytz
 from email.message import EmailMessage
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 import sqlite3
 import random
+import csv
 
 # Load environment variables
 load_dotenv()
@@ -51,19 +50,27 @@ def check_sent_journals(email, journal_name):
 
 # Retrieve user data from the website's database
 def retrieve_user_data():
-    csv_path = os.path.join(os.path.dirname(__file__), 'data', 'users.csv')
-    users_data = pd.read_csv(csv_path)
-    return users_data[['email', 'interest']].values.tolist()
+    cursor = conn.execute("SELECT email, interest FROM users")
+    return cursor.fetchall()
 
 
+# saave the user detials in a csv file
+def save_user_details_to_csv(email, interest):
+    with open('users.csv', 'a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow([email, interest])
+        
+        
 # Load subscribers' email and interest from the website's database
 subscribers = retrieve_user_data()
+
 
 subject = 'Automated Journal Papers According to Your Interest'
 
 for user in subscribers:
     email = user[0]
     interest = user[1]
+    save_user_details_to_csv(email, interest)
 
     # Retrieve the start, end, and interest values from the database
     cursor = conn.execute(
