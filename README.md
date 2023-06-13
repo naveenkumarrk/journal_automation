@@ -24,13 +24,12 @@ Before running the project, ensure you have the following installed:
 
 1. Clone the repository:
 
-   ```shell
+   ```
    git clone https://github.com/your-username/your-repo.git
 
 
 2.Install the dependencies:
 
- ```shell
         cd your-repo
         npm install
         
@@ -40,14 +39,14 @@ Before running the project, ensure you have the following installed:
 - Create a .env file in the project root directory.
 - Add the following variables to the .env file and replace the values with your own:
  
- ```shell
+ 
         EMAIL_USER=your-email@gmail.com
         EMAIL_PASS=your-email-password
         SPRINGER_API_KEY=your-springer-api-key
         IEEE_API_KEY=your-ieee-api-key
 
 4. Start the application:
-    ```shell
+   
         npm start
 The application should now be running at http://localhost:3000.
 
