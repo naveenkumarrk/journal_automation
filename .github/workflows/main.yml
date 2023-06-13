@@ -14,7 +14,7 @@ jobs:
         with:
           python-version: 3.x
       - name: Install dependencies
-        run: pip install requirements.txt
+        run:  pip install requests smtplib pytz pandas python-dotenv
       - name: Run email code
         env:
           EMAIL_USER: ${{secrets.EMAIL_USER}}
