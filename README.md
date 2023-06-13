@@ -27,18 +27,14 @@ Before running the project, ensure you have the following installed:
    ```
    git clone https://github.com/your-username/your-repo.git
 
-
 2.Install the dependencies:
 
         cd your-repo
         npm install
         
-
-
 3. Set up environment variables:
 - Create a .env file in the project root directory.
 - Add the following variables to the .env file and replace the values with your own:
- 
  
         EMAIL_USER=your-email@gmail.com
         EMAIL_PASS=your-email-password
@@ -48,6 +44,7 @@ Before running the project, ensure you have the following installed:
 4. Start the application:
    
         npm start
+        
 The application should now be running at http://localhost:3000.
 
 ## Usage
