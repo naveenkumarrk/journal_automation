@@ -2,7 +2,7 @@ name: Journal Automation
 
 on:
   schedule:
-    - cron: '25 0 * * 3'  # Run every Saturday at midnight
+    - cron: '28 0 * * 3'  # Run every Saturday at midnight
 
 jobs:
   run_journal_script:
