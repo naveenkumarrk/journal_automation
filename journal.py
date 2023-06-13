@@ -51,7 +51,8 @@ def check_sent_journals(email, journal_name):
 
 # Retrieve user data from the website's database
 def retrieve_user_data():
-    users_data = pd.read_csv('users.csv')
+    csv_path = os.path.join(os.path.dirname(__file__), 'data', 'users.csv')
+    users_data = pd.read_csv(csv_path)
     return users_data[['email', 'interest']].values.tolist()
 
 
