@@ -18,7 +18,8 @@ jobs:
           python-version: 3.8  
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+         pip install -r requirements.txt
 
       
       - name: Send the journals to the subscribers
@@ -27,4 +28,5 @@ jobs:
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
           SPRINGER_API_KEY: ${{ secrets.SPRINGER_API_KEY }}
         
-        run: python journal.py
+        run: |
+         python journal.py
