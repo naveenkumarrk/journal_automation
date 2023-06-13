@@ -2,7 +2,7 @@ name: Journal Automation
 
 on:
   schedule:
-    - cron: '45 0 * * 3'  # Run every Saturday at midnight
+    - cron: '46 0 * * 3'  # Run every Saturday at midnight
 
 jobs:
   run_journal_script:
@@ -19,9 +19,9 @@ jobs:
     - name: Install dependencies
 
       run: |
-      python -m pip install --upgrade pip
-      pip install -r requirements.txt
+       python pip install --upgrade pip
+       pip install -r requirements.txt
 
     - name: Run Python script
       run: |
-      python journal.py
+       python journal.py
