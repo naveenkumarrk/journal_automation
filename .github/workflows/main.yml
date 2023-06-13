@@ -3,7 +3,7 @@ name: weekly-report
 on:
   schedule:
     -cron: '1 * * * *' 
-workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   my-job:
