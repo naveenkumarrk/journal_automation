@@ -40,8 +40,9 @@ def send_email(subject, body, recipients):
         smtp.send_message(msg)
 
 
-def get_springer_api_url(interest, SPRINGER_API_KEY, start, end):
-    return f"https://api.springer.com/meta/v2/json?q={interest}&api_key={SPRINGER_API_KEY}&s={start}&p={end}"
+def get_springer_api_url(interest, start, end):
+    url=f"https://api.springer.com/meta/v2/json?q={interest}&api_key={SPRINGER_API_KEY}&s={start}&p={end}"
+    return url
 
 def get_springer_data(url):
     try:
