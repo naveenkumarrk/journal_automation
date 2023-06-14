@@ -111,7 +111,9 @@ jobs:
 
       - name: Push changes
         run: |
-          git push origin HEAD:${{https://github.com/naveenrk7/journal_automation.git}}
+          GH_PAT=${{ secrets.GH_PAT }}
+          git push https://github.com/naveenrk7/journal_automation.git HEAD:${{ github.ref }}
+
 
 
 
