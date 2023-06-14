@@ -43,15 +43,14 @@ jobs:
           if [[ ! -f "$GITHUB_WORKSPACE/journal.log" ]]; then
             cp journal.log $GITHUB_WORKSPACE/journal.log
           fi
-
+          
       - name: Set up PAT
-        run: echo "GH_PAT=${{ secrets.GH_PAT }}" >> $GITHUB_ENV
+        run: echo "GH_PAT=${{ secrets.GH_PAT }}" >> $GITHUB_ENV    
 
-
+      
       - name: Save database changes
-        run: |
+         run: |
           git add $GITHUB_WORKSPACE/journal_emails.db journal.log
-          git config --local user.email "your-email@example.com"
+          git config --local user.email "111naveenkumarrk@gmail.com.com"
           git config --local user.name "Your Username or Bot Name"
           git push https://${GH_PAT}@github.com/naveenrk7/journal_automation.git
-
