@@ -9,40 +9,26 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
           python-version: 3.x
-
-
       - name: Install dependencies
-        run: 
-         pip install requests  pytz pandas python-dotenv
-
+        run: pip install requests pytz pandas python-dotenv
       - name: Set up SQLite database
-        run: |
-          touch journal_emails.db
-          cp journal_emails.db $GITHUB_WORKSPACE/journal_emails.db
-
-
+        run: touch $GITHUB_WORKSPACE/journal_emails.db
       - name: Run email code
         env:
           EMAIL_USER: ${{secrets.EMAIL_USER}}
           EMAIL_PASS: ${{secrets.EMAIL_PASS}}
           SPRINGER_API_KEY: ${{secrets.SPRINGER_API_KEY}}
-        run:
-         python journal.py
-         cp journal.log $GITHUB_WORKSPACE/journal.log
-         
+        run: python journal.py
       - name: Save database changes
         run: |
-          cp $GITHUB_WORKSPACE/journal_emails.db journal_emails.db
-          git add journal_emails.db
+          cp journal_emails.db $GITHUB_WORKSPACE/journal_emails.db
+          cp journal.log $GITHUB_WORKSPACE/journal.log
+          git add $GITHUB_WORKSPACE/journal_emails.db journal.log
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git commit -m "Update database" -a
           git push
-
-
-  
