@@ -36,7 +36,7 @@ jobs:
       - name: Save database changes
         run: |
           git add $GITHUB_WORKSPACE/journal_emails.db journal.log
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.email "111naveenkumarrk@gmail.com"
+          git config --local user.name "naveenrk7"
           git commit -m "Update database" -a
           git push
