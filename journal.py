@@ -15,7 +15,6 @@ EMAIL_ADDRESS = os.environ.get("EMAIL_USER")
 EMAIL_PASSWORD = os.environ.get("EMAIL_PASS")
 
 SPRINGER_API_KEY = os.environ.get("SPRINGER_API_KEY")
-IEEE_API_KEY = os.environ.get("IEEE_API_KEY")
 
 # Connect to the database
 conn = sqlite3.connect('journal_emails.db')
@@ -41,7 +40,7 @@ def send_email(subject, body, recipients):
         smtp.send_message(msg)
 
 
-def get_springer_api_url(interest, start, end):
+def get_springer_api_url(interest, SPRINGER_API_KEY, start, end):
     return f"https://api.springer.com/meta/v2/json?q={interest}&api_key={SPRINGER_API_KEY}&s={start}&p={end}"
 
 def get_springer_data(url):
