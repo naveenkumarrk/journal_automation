@@ -44,11 +44,7 @@ jobs:
         run: echo "GH_PAT=${{ secrets.GH_PAT }}" >> $GITHUB_ENV
 
       - name: Save database changes
-<<<<<<< HEAD
-        run: |
-=======
          run: 
->>>>>>> a63cafb11bb742e03e768b7c18d24f04dea66772
           git add $GITHUB_WORKSPACE/journal_emails.db journal.log
           git config --local user.email "111naveenkumarrk@gmail.com.com"
           git config --local user.name "Your Username or Bot Name"
