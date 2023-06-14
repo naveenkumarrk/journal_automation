@@ -66,10 +66,11 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: 3.x
-          permissions:
-            pull-requests: write
-            issues: write
-            repository-projects: write
+        
+        permissions:
+          pull-requests: write
+          issues: write
+          repository-projects: write
 
       - name: Install dependencies
         run: pip install requests pytz pandas python-dotenv
@@ -84,25 +85,23 @@ jobs:
           SPRINGER_API_KEY: ${{ secrets.SPRINGER_API_KEY }}
         run: python journal.py
 
-      - name: Configure Git user and email
-        run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-
       - name: Copy database file
         run: |
           if [[ ! -f "$GITHUB_WORKSPACE/journal_emails.db" ]]; then
-            cp "journal_emails.db" "$GITHUB_WORKSPACE/journal_emails.db"
+            cp journal_emails.db $GITHUB_WORKSPACE/journal_emails.db
           fi
 
       - name: Copy log file
         run: |
           if [[ ! -f "$GITHUB_WORKSPACE/journal.log" ]]; then
-            cp "journal.log" "$GITHUB_WORKSPACE/journal.log"
+            cp journal.log $GITHUB_WORKSPACE/journal.log
           fi
 
       - name: Save database changes
         run: |
-          git add "$GITHUB_WORKSPACE/journal_emails.db" journal.log
+          git add $GITHUB_WORKSPACE/journal_emails.db journal.log
+          git config --local user.email github-actions[bot]@users.noreply.github.com
+          git config --local user.name github-actions[bot]
           git commit -m "Update database" -a
           git push
+
