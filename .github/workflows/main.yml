@@ -61,16 +61,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      issues: write
+      repository-projects: write
+      contents: write
+
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
           python-version: 3.x
-        
-        permissions:
-          pull-requests: write
-          issues: write
-          repository-projects: write
 
       - name: Install dependencies
         run: pip install requests pytz pandas python-dotenv
@@ -97,14 +98,14 @@ jobs:
             cp journal.log $GITHUB_WORKSPACE/journal.log
           fi
 
-      - name: commit files
+      - name: Commit files
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add -A
-          git diff-index --quiet HEAD || (git commit -a -m "updated logs" --allow-empty)
+          git diff-index --quiet HEAD || (git commit -a -m "Updated logs" --allow-empty)
 
-      - name: push changes
+      - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
