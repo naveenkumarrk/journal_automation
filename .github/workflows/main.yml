@@ -3,7 +3,7 @@ name: weekly-report
 on:
   schedule:
     - cron: '*/1 * * * *'
-workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   build:
@@ -15,10 +15,8 @@ jobs:
         with:
           python-version: 3.x
 
-
       - name: Install dependencies
         run: pip install requests pytz pandas python-dotenv
-
 
       - name: Set up SQLite database
         run: touch $GITHUB_WORKSPACE/journal_emails.db
@@ -30,26 +28,23 @@ jobs:
           SPRINGER_API_KEY: ${{secrets.SPRINGER_API_KEY}}
         run: python journal.py
 
-
       - name: Copy database file
         run: |
           if [[ ! -f "$GITHUB_WORKSPACE/journal_emails.db" ]]; then
             cp journal_emails.db $GITHUB_WORKSPACE/journal_emails.db
           fi
 
-
       - name: Copy log file
         run: |
           if [[ ! -f "$GITHUB_WORKSPACE/journal.log" ]]; then
             cp journal.log $GITHUB_WORKSPACE/journal.log
           fi
-          
-      - name: Set up PAT
-        run: echo "GH_PAT=${{ secrets.GH_PAT }}" >> $GITHUB_ENV    
 
-      
+      - name: Set up PAT
+        run: echo "GH_PAT=${{ secrets.GH_PAT }}" >> $GITHUB_ENV
+
       - name: Save database changes
-         run: |
+        run: |
           git add $GITHUB_WORKSPACE/journal_emails.db journal.log
           git config --local user.email "111naveenkumarrk@gmail.com.com"
           git config --local user.name "Your Username or Bot Name"
