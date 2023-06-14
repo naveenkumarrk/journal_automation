@@ -1,4 +1,3 @@
-# generate a 
 name: weekly-report
 
 on:
@@ -24,24 +23,34 @@ jobs:
 
       - name: Run email code
         env:
-          EMAIL_USER: ${{secrets.EMAIL_USER}}
-          EMAIL_PASS: ${{secrets.EMAIL_PASS}}
-          SPRINGER_API_KEY: ${{secrets.SPRINGER_API_KEY}}
-        run: |
-          python journal.py
-          cp journal_emails.db $GITHUB_WORKSPACE/journal_emails.db
-          cp journal.log $GITHUB_WORKSPACE/journal.log
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          SPRINGER_API_KEY: ${{ secrets.SPRINGER_API_KEY }}
+        run: python journal.py
+
+      - name: Upload database file
+        uses: actions/upload-artifact@v2
+        with:
+          name: Database
+          path: journal_emails.db
+
+      - name: Upload log file
+        uses: actions/upload-artifact@v2
+        with:
+          name: Log
+          path: journal.log
 
       - name: Set up PAT
         run: echo "GH_PAT=${{ secrets.GH_PAT }}" >> $GITHUB_ENV
 
-      - name: Save database changes
+      - name: Commit and push changes
         run: |
-          git add $GITHUB_WORKSPACE/journal_emails.db journal.log
           git config user.email github-actions[bot]@users.noreply.github.com
           git config user.name github-actions[bot]
+          git add .
           git commit -m "Update database and log files"
           git push https://${GH_PAT}@github.com/naveenrk7/journal_automation.git
+
 
 
 # name: weekly-report
