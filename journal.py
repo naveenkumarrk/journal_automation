@@ -205,8 +205,7 @@ for user in subscribers:
 
                             start += 5
                             end += 5
-                            conn.execute(
-                    "UPDATE users SET start=?, end=? WHERE email=?", (start, end, email))
+                            conn.execute("UPDATE users SET start=?, end=? WHERE email=?", (start, end, email))
         else:
             print("Invalid or empty response from Springer API.")
 
