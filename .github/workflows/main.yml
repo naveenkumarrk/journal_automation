@@ -23,10 +23,18 @@ jobs:
           EMAIL_PASS: ${{secrets.EMAIL_PASS}}
           SPRINGER_API_KEY: ${{secrets.SPRINGER_API_KEY}}
         run: python journal.py
+      - name: Copy database file
+        run: |
+          if [[ ! -f "$GITHUB_WORKSPACE/journal_emails.db" ]]; then
+            cp journal_emails.db $GITHUB_WORKSPACE/journal_emails.db
+          fi
+      - name: Copy log file
+        run: |
+          if [[ ! -f "$GITHUB_WORKSPACE/journal.log" ]]; then
+            cp journal.log $GITHUB_WORKSPACE/journal.log
+          fi
       - name: Save database changes
         run: |
-          cp journal_emails.db $GITHUB_WORKSPACE/journal_emails.db
-          cp journal.log $GITHUB_WORKSPACE/journal.log
           git add $GITHUB_WORKSPACE/journal_emails.db journal.log
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
