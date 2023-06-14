@@ -21,3 +21,9 @@ jobs:
           EMAIL_PASS: ${{secrets.EMAIL_PASS}}
           SPRINGER_API_KEY: ${{secrets.SPRINGER_API_KEY}}
         run: python journal.py
+
+      - name: Print secrets
+        run: |
+          echo "Email user: $EMAIL_USER"
+          echo "Email pass: $EMAIL_PASS"
+          echo "Springer API key: $SPRINGER_API_KEY"
