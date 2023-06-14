@@ -88,7 +88,16 @@ jobs:
           python journal.py
           git add journal_emails.db
           git commit -m "Update database"
-          git push
+      - name: Push changes
+        run: |
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.PAT }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/naveenrk7/journal_automation/git/refs/heads/${{ github.ref }}/update" \
+            -d '{
+              "sha": "'"$GITHUB_SHA"'",
+              "force": true
+            }'
 
 
 
