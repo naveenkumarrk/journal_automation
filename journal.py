@@ -200,7 +200,9 @@ for user in subscribers:
                                 logging.error(f"Error sending email t{email}: {str(e)}")
 
                             if len(new_journals) > 0:
-                                conn.executemany("INSERT INTO journals (email, journal_name) VALUES (?, ?)", new_journals)
+                                conn.executemany(
+                "INSERT INTO journals (email, journal_name) VALUES (?, ?)", new_journals)
+
                             start += 5
                             end += 5
                             conn.execute(
