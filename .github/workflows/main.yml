@@ -1,3 +1,4 @@
+# generate a 
 name: weekly-report
 
 on:
@@ -26,19 +27,10 @@ jobs:
           EMAIL_USER: ${{secrets.EMAIL_USER}}
           EMAIL_PASS: ${{secrets.EMAIL_PASS}}
           SPRINGER_API_KEY: ${{secrets.SPRINGER_API_KEY}}
-        run: python journal.py
-
-      - name: Copy database file
         run: |
-          if [[ ! -f "$GITHUB_WORKSPACE/journal_emails.db" ]]; then
-            cp journal_emails.db $GITHUB_WORKSPACE/journal_emails.db
-          fi
-
-      - name: Copy log file
-        run: |
-          if [[ ! -f "$GITHUB_WORKSPACE/journal.log" ]]; then
-            cp journal.log $GITHUB_WORKSPACE/journal.log
-          fi
+          python journal.py
+          cp journal_emails.db $GITHUB_WORKSPACE/journal_emails.db
+          cp journal.log $GITHUB_WORKSPACE/journal.log
 
       - name: Set up PAT
         run: echo "GH_PAT=${{ secrets.GH_PAT }}" >> $GITHUB_ENV
@@ -47,7 +39,8 @@ jobs:
         run: |
           git add $GITHUB_WORKSPACE/journal_emails.db journal.log
           git config user.email github-actions[bot]@users.noreply.github.com
-          git config git config user.name github-actions[bot]
+          git config user.name github-actions[bot]
+          git commit -m "Update database and log files"
           git push https://${GH_PAT}@github.com/naveenrk7/journal_automation.git
 
 
