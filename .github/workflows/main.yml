@@ -1,56 +1,3 @@
-# name: weekly-report
-
-# on:
-#   schedule:
-#     - cron: '*/1 * * * *'
-#   workflow_dispatch:
-
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-#     steps:
-
-#       - uses: actions/checkout@v2
-#       - uses: actions/setup-python@v2
-#         with:
-#           python-version: 3.x
-
-#       - name: Install dependencies
-#         run: pip install requests pytz pandas python-dotenv
-
-#       - name: Set up SQLite database
-#         run: touch $GITHUB_WORKSPACE/journal_emails.db
-
-#       - name: Run email code
-#         env:
-#           EMAIL_USER: ${{secrets.EMAIL_USER}}
-#           EMAIL_PASS: ${{secrets.EMAIL_PASS}}
-#           SPRINGER_API_KEY: ${{secrets.SPRINGER_API_KEY}}
-#         run: python journal.py
-
-#       - name: Copy database file
-#         run: |
-#           if [[ ! -f "$GITHUB_WORKSPACE/journal_emails.db" ]]; then
-#             cp journal_emails.db $GITHUB_WORKSPACE/journal_emails.db
-#           fi
-
-#       - name: Copy log file
-#         run: |
-#           if [[ ! -f "$GITHUB_WORKSPACE/journal.log" ]]; then
-#             cp journal.log $GITHUB_WORKSPACE/journal.log
-#           fi
-
-#       - name: Set up PAT
-#         run: echo "GH_PAT=${{ secrets.GH_PAT }}" >> $GITHUB_ENV
-
-#       - name: Save database changes
-#         run: |
-#           git add $GITHUB_WORKSPACE/journal_emails.db journal.log
-#           git config --local user.email github-actions[bot]@users.noreply.github.com
-#           git config --local git config user.name github-actions[bot]
-#           git push https://${GH_PAT}@github.com/naveenrk7/journal_automation.git
-
-
 name: weekly-report
 
 on:
@@ -61,13 +8,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
-      issues: write
-      repository-projects: write
-      contents: write
-
     steps:
+
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
@@ -81,9 +23,9 @@ jobs:
 
       - name: Run email code
         env:
-          EMAIL_USER: ${{ secrets.EMAIL_USER }}
-          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-          SPRINGER_API_KEY: ${{ secrets.SPRINGER_API_KEY }}
+          EMAIL_USER: ${{secrets.EMAIL_USER}}
+          EMAIL_PASS: ${{secrets.EMAIL_PASS}}
+          SPRINGER_API_KEY: ${{secrets.SPRINGER_API_KEY}}
         run: python journal.py
 
       - name: Copy database file
@@ -98,15 +40,77 @@ jobs:
             cp journal.log $GITHUB_WORKSPACE/journal.log
           fi
 
-      - name: Commit files
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add -A
-          git diff-index --quiet HEAD || (git commit -a -m "Updated logs" --allow-empty)
+      - name: Set up PAT
+        run: echo "GH_PAT=${{ secrets.GH_PAT }}" >> $GITHUB_ENV
 
-      - name: Push changes
-        uses: ad-m/github-push-action@v0.6.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: master
+      - name: Save database changes
+        run: |
+          git add $GITHUB_WORKSPACE/journal_emails.db journal.log
+          git config --local user.email github-actions[bot]@users.noreply.github.com
+          git config --local git config user.name github-actions[bot]
+          git push https://${GH_PAT}@github.com/naveenrk7/journal_automation.git
+
+
+# name: weekly-report
+
+# on:
+#   schedule:
+#     - cron: '*/1 * * * *'
+#   workflow_dispatch:
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     permissions:
+#       pull-requests: write
+#       issues: write
+#       repository-projects: write
+#       contents: write
+
+#     steps:
+#       - uses: actions/checkout@v2
+#       - uses: actions/setup-python@v2
+#         with:
+#           python-version: 3.x
+# <<<<<<< HEAD
+# =======
+
+# >>>>>>> 51c8b0905573b91bf3aaaf998815370295c6a5a5
+
+#       - name: Install dependencies
+#         run: pip install requests pytz pandas python-dotenv
+
+#       - name: Set up SQLite database
+#         run: touch $GITHUB_WORKSPACE/journal_emails.db
+
+#       - name: Run email code
+#         env:
+#           EMAIL_USER: ${{ secrets.EMAIL_USER }}
+#           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+#           SPRINGER_API_KEY: ${{ secrets.SPRINGER_API_KEY }}
+#         run: python journal.py
+
+#       - name: Copy database file
+#         run: |
+#           if [[ ! -f "$GITHUB_WORKSPACE/journal_emails.db" ]]; then
+#             cp journal_emails.db $GITHUB_WORKSPACE/journal_emails.db
+#           fi
+
+#       - name: Copy log file
+#         run: |
+#           if [[ ! -f "$GITHUB_WORKSPACE/journal.log" ]]; then
+#             cp journal.log $GITHUB_WORKSPACE/journal.log
+#           fi
+
+#       - name: Commit files
+#         run: |
+#           git config --local user.email "action@github.com"
+#           git config --local user.name "GitHub Action"
+#           git add -A
+#           git diff-index --quiet HEAD || (git commit -a -m "Updated logs" --allow-empty)
+
+#       - name: Push changes
+#         uses: ad-m/github-push-action@v0.6.0
+#         with:
+#           github_token: ${{ secrets.GITHUB_TOKEN }}
+#           branch: master
