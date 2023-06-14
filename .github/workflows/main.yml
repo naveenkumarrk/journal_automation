@@ -9,34 +9,49 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
           python-version: 3.x
+
+
       - name: Install dependencies
         run: pip install requests pytz pandas python-dotenv
+
+
       - name: Set up SQLite database
         run: touch $GITHUB_WORKSPACE/journal_emails.db
+
       - name: Run email code
         env:
           EMAIL_USER: ${{secrets.EMAIL_USER}}
           EMAIL_PASS: ${{secrets.EMAIL_PASS}}
           SPRINGER_API_KEY: ${{secrets.SPRINGER_API_KEY}}
         run: python journal.py
+
+
       - name: Copy database file
         run: |
           if [[ ! -f "$GITHUB_WORKSPACE/journal_emails.db" ]]; then
             cp journal_emails.db $GITHUB_WORKSPACE/journal_emails.db
           fi
+
+
       - name: Copy log file
         run: |
           if [[ ! -f "$GITHUB_WORKSPACE/journal.log" ]]; then
             cp journal.log $GITHUB_WORKSPACE/journal.log
           fi
+
+      - name: Set up PAT
+        run: echo "GH_PAT=${{ secrets.GH_PAT }}" >> $GITHUB_ENV
+
+
       - name: Save database changes
         run: |
           git add $GITHUB_WORKSPACE/journal_emails.db journal.log
-          git config --local user.email "111naveenkumarrk@gmail.com"
-          git config --local user.name "naveenrk7"
-          git commit -m "Update database" -a
-          git push
+          git config --local user.email "your-email@example.com"
+          git config --local user.name "Your Username or Bot Name"
+          git push https://${GH_PAT}@github.com/naveenrk7/journal_automation.git
+
