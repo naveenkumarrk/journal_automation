@@ -99,7 +99,7 @@ for user in subscribers:
         start = result[1]
         end = result[2]
 
-        springer_api_url = get_springer_api_url(interest, start, end)
+        springer_api_url = get_springer_api_url(interest,SPRINGER_API_KEY, start, end)
 
         springer_data = get_springer_data(springer_api_url)
 
