@@ -1,3 +1,59 @@
+# name: weekly-report
+
+# on:
+#   schedule:
+#     - cron: '*/1 * * * *'
+#   workflow_dispatch:
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+
+#       - uses: actions/checkout@v2
+#       - uses: actions/setup-python@v2
+#         with:
+#           python-version: 3.x
+
+#       - name: Install dependencies
+#         run: pip install requests pytz pandas python-dotenv
+
+#       - name: Set up SQLite database
+#         run: touch $GITHUB_WORKSPACE/journal_emails.db
+
+#       - name: Run email code
+#         env:
+#           EMAIL_USER: ${{ secrets.EMAIL_USER }}
+#           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+#           SPRINGER_API_KEY: ${{ secrets.SPRINGER_API_KEY }}
+#         run: python journal.py
+
+#       - name: Upload database file
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: Database
+#           path: journal_emails.db
+
+#       - name: Upload log file
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: Log
+#           path: journal.log
+
+#       - name: Set up PAT
+#         run: echo "GH_PAT=${{ secrets.GH_PAT }}" >> $GITHUB_ENV
+
+
+#       - name: Commit and push changes
+#         run: |
+#           git config user.email github-actions[bot]@users.noreply.github.com
+#           git config user.name github-actions[bot]
+#           git add .
+#           git commit -m "Update database and log files"
+#           git push https://${GH_PAT}@github.com/naveenrk7/journal_automation.git
+
+
+
 name: weekly-report
 
 on:
@@ -9,7 +65,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
@@ -40,17 +95,13 @@ jobs:
           name: Log
           path: journal.log
 
-      - name: Set up PAT
-        run: echo "GH_PAT=${{ secrets.GH_PAT }}" >> $GITHUB_ENV
-
-
       - name: Commit and push changes
         run: |
           git config user.email github-actions[bot]@users.noreply.github.com
           git config user.name github-actions[bot]
           git add .
           git commit -m "Update database and log files"
-          git push https://${GH_PAT}@github.com/naveenrk7/journal_automation.git
+          git push origin HEAD:${{ github.ref }}
 
 
 
