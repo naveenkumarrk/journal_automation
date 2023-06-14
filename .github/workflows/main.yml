@@ -46,8 +46,8 @@ jobs:
       - name: Save database changes
         run: |
           git add $GITHUB_WORKSPACE/journal_emails.db journal.log
-          git config --local user.email github-actions[bot]@users.noreply.github.com
-          git config --local git config user.name github-actions[bot]
+          git config user.email github-actions[bot]@users.noreply.github.com
+          git config git config user.name github-actions[bot]
           git push https://${GH_PAT}@github.com/naveenrk7/journal_automation.git
 
 
