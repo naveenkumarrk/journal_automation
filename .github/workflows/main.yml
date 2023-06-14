@@ -63,6 +63,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Delay
+        run: sleep 5
       - name: Checkout repository
         uses: actions/checkout@v2
 
