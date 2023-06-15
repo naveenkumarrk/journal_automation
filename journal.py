@@ -85,8 +85,14 @@ subject = 'Automated Journal Papers According to Your Interest'
 for user in subscribers:
     email = user[0]
     interest = user[1]
-    last_sent_date = datetime.strptime(user[2], '%Y-%m-%d %H:%M:%S.%f') if user[2] else None
-    
+    last_sent_date = None
+
+    if len(user) > 2 and user[2]:
+        try:
+            last_sent_date = datetime.strptime(user[2], '%Y-%m-%d %H:%M:%S.%f')
+        except ValueError:
+            print(f"Invalid date format for user: {email}")
+
     save_user_details_to_csv(email, interest)
 
     cursor = conn.execute(
@@ -113,7 +119,7 @@ for user in subscribers:
                     end = 5
                 else:
                     # Send email with new set of journals
-                    
+
                     # Update last sent date for the subscriber
                     conn.execute("UPDATE users SET last_sent_date=? WHERE email=?", (datetime.now(), email))
 
