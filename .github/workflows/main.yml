@@ -86,11 +86,14 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add .
-          git commit -m "Update database and log files"
-          git push
+           curl -X POST \
+            -H "Authorization: token ${{ secrets.PAT }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/naveenrk7/journal_automation/git/refs/heads/${{ github.ref }}/update" \
+            -d '{
+              "sha": "'"$GITHUB_SHA"'",
+              "force": true
+            }'
 
 
 
