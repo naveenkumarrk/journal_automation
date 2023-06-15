@@ -1,14 +1,29 @@
-pipeline{
-    agent any 
+pipeline {
+    agent any
+    
+    triggers {
+        cron('H H * * 6') // Schedule the job to run every Saturday at 12:00 AM
+    }
+    
     stages {
-        stage('version) {
+        stage('Prepare') {
             steps {
-                sh 'python --version'
+                sh 'pip install requests pytz pandas python-dotenv'
+                sh 'touch journal_emails.db'
+                sh 'touch journal.log'
             }
         }
-        stage('hello'){
+        
+        stage('Run Python Code') {
             steps {
                 sh 'python journal.py'
+            }
+        }
+        
+        stage('Archive Logs') {
+            steps {
+                archiveArtifacts 'journal_emails.db'
+                archiveArtifacts 'journal.log'
             }
         }
     }
