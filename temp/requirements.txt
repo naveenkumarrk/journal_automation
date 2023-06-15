@@ -1,0 +1,8 @@
+requests
+smtplib
+email
+datetime
+dotenv
+sqlite3
+random
+csv
