@@ -178,6 +178,7 @@ on:
 jobs:
   send_emails:
     runs-on: ubuntu-latest
+  workflow_dispatch:
 
     steps:
       - name: Checkout repository
@@ -200,7 +201,7 @@ jobs:
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
           SPRINGER_API_KEY: ${{ secrets.SPRINGER_API_KEY }}
         run: |
-          python send_weekly_emails.py
+          python journal.py
 
           # Get the updated values of start and end from the output file
           START=$(cat output.txt | awk '{print $1}')
