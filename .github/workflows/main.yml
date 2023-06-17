@@ -140,10 +140,12 @@ name: Weekly Email
 on:
   schedule:
     - cron: "0 0 * * 6" # Run every Saturday at midnight UTC
+  workflow_dispatch:
 
 jobs:
   send_email:
     runs-on: ubuntu-latest
+  
 
     steps:
       - name: Checkout repository
