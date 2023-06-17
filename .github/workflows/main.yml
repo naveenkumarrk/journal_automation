@@ -160,7 +160,7 @@ jobs:
         run: pip install requests pytz pandas python-dotenv
 
       - name: Send Email
-        run: python send_email.py
+        run: python journal.py
 
 
 
