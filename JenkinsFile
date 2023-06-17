@@ -28,3 +28,25 @@ pipeline {
         }
     }
 }
+
+
+
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/naveenrk7/journal_automation.git']])
+            }
+        }
+        stage('Build') {
+            steps{
+                git 'https://github.com/naveenrk7/journal_automation.git'
+                bat 'python journal.py'
+            }
+        }
+    }
+}
+

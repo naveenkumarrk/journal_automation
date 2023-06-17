@@ -228,10 +228,11 @@ for user in subscribers:
                             start += 5
                             end += 5
                             conn.execute("UPDATE users SET start=?, end=? WHERE email=?", (start, end, email))
+                            conn.commit()
         else:
             print("Invalid or empty response from Springer API.")
 
-conn.commit()
+
 conn.close()
 
 

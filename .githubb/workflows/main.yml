@@ -54,15 +54,70 @@
 
 
 
-name: weekly-report
+# name: weekly-report
+
+# on:
+#   schedule:
+#     - cron: '*/1 * * * *'
+#   workflow_dispatch:
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v2
+
+#       - name: Set up Python
+#         uses: actions/setup-python@v2
+#         with:
+#           python-version: 3.x
+
+#       - name: Install dependencies
+#         run: pip install requests pytz pandas python-dotenv
+
+#       - name: Run email code
+#         env:
+#           EMAIL_USER: ${{ secrets.EMAIL_USER }}
+#           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+#           SPRINGER_API_KEY: ${{ secrets.SPRINGER_API_KEY }}
+#         run: |
+#           python journal.py
+
+#       - name: Commit and push changes
+#         run: |
+#            curl -X POST \
+#             -H "Authorization: token ${{ secrets.PAT }}" \
+#             -H "Accept: application/vnd.github.v3+json" \
+#             "https://api.github.com/repos/naveenrk7/journal_automation/git/refs/heads/${{ github.ref }}/update" \
+#             -d '{
+#               "sha": "'"$GITHUB_SHA"'",
+#               "force": true
+#             }'
+
+
+
+
+name: Update Database and Send Journal Emails
 
 on:
   schedule:
-    - cron: '*/1 * * * *'
-  workflow_dispatch:
+    - cron: "0 0 * * *"
 
 jobs:
-  build:
+  update-database:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Update Database
+        run: |
+          # Place commands here to update the database file
+          # For example, you can download the updated file or generate it
+
+  send-journal-emails:
+    needs: update-database
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -74,29 +129,10 @@ jobs:
           python-version: 3.x
 
       - name: Install dependencies
-        run: pip install requests pytz pandas python-dotenv
+        run: pip install -r requirements.txt
 
-      - name: Run email code
-        env:
-          EMAIL_USER: ${{ secrets.EMAIL_USER }}
-          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-          SPRINGER_API_KEY: ${{ secrets.SPRINGER_API_KEY }}
-        run: |
-          python journal.py
-
-      - name: Commit and push changes
-        run: |
-           curl -X POST \
-            -H "Authorization: token ${{ secrets.PAT }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            "https://api.github.com/repos/naveenrk7/journal_automation/git/refs/heads/${{ github.ref }}/update" \
-            -d '{
-              "sha": "'"$GITHUB_SHA"'",
-              "force": true
-            }'
-
-
-
+      - name: Run Python script
+        run: python script.py
 
 # name: weekly-report
 
