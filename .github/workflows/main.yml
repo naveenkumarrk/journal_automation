@@ -134,19 +134,18 @@
 #       - name: Run Python script
 #         run: python script.py
 
-name: weekly-report
+
+name: Weekly Email
 
 on:
   schedule:
-    - cron: '*/1 * * * *'
-  workflow_dispatch:
+    - cron: "0 0 * * 6" # Run every Saturday at midnight UTC
 
 jobs:
-  build:
+  send_email:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Delay
-        run: sleep 5
       - name: Checkout repository
         uses: actions/checkout@v2
 
@@ -156,33 +155,62 @@ jobs:
           python-version: 3.x
 
       - name: Install dependencies
-        run: pip install requests pytz pandas python-dotenv
+        run: pip install -r requirements.txt
 
-      - name: Set up SQLite database
-        run: touch $GITHUB_WORKSPACE/journal_emails.db
+      - name: Send Email
+        run: python send_email.py
 
-      - name: Run email code and update database
-        env:
-          EMAIL_USER: ${{ secrets.EMAIL_USER }}
-          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-          SPRINGER_API_KEY: ${{ secrets.SPRINGER_API_KEY }}
-        run: |
-          python journal.py
-          git config user.email "github-actions-bot@users.noreply.github.com"
-          git config user.name "GitHub Actions"
-          python journal.py
-          git add journal_emails.db
-          git commit -m "Update database"
-      - name: Push changes
-        run: |
-          curl -X POST \
-            -H "Authorization: token ${{ secrets.PAT }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            "https://api.github.com/repos/naveenrk7/journal_automation/git/refs/heads/${{ github.ref }}/update" \
-            -d '{
-              "sha": "'"$GITHUB_SHA"'",
-              "force": true
-            }'
+
+
+# name: weekly-report
+
+# on:
+#   schedule:
+#     - cron: '*/1 * * * *'
+#   workflow_dispatch:
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Delay
+#         run: sleep 5
+#       - name: Checkout repository
+#         uses: actions/checkout@v2
+
+#       - name: Set up Python
+#         uses: actions/setup-python@v2
+#         with:
+#           python-version: 3.x
+
+#       - name: Install dependencies
+#         run: pip install requests pytz pandas python-dotenv
+
+#       - name: Set up SQLite database
+#         run: touch $GITHUB_WORKSPACE/journal_emails.db
+
+#       - name: Run email code and update database
+#         env:
+#           EMAIL_USER: ${{ secrets.EMAIL_USER }}
+#           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+#           SPRINGER_API_KEY: ${{ secrets.SPRINGER_API_KEY }}
+#         run: |
+#           python journal.py
+#           git config user.email "github-actions-bot@users.noreply.github.com"
+#           git config user.name "GitHub Actions"
+#           python journal.py
+#           git add journal_emails.db
+#           git commit -m "Update database"
+#       - name: Push changes
+#         run: |
+#           curl -X POST \
+#             -H "Authorization: token ${{ secrets.PAT }}" \
+#             -H "Accept: application/vnd.github.v3+json" \
+#             "https://api.github.com/repos/naveenrk7/journal_automation/git/refs/heads/${{ github.ref }}/update" \
+#             -d '{
+#               "sha": "'"$GITHUB_SHA"'",
+#               "force": true
+#             }'
 
 
 
