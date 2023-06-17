@@ -464,6 +464,7 @@ for user in subscribers:
                             end += 5
 
                             conn.execute("UPDATE users SET start=?, end=? WHERE email=?", (start, end, email))
+                            conn.commit()
 
 conn.commit()
 conn.close()
