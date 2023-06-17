@@ -135,17 +135,49 @@
 #         run: python script.py
 
 
-name: Weekly Email
+# name: Weekly Email
 
+# on:
+#   schedule:
+#     - cron: "0 0 * * 6" # Run every Saturday at midnight UTC
+#   workflow_dispatch:
+
+# jobs:
+#   send_email:
+#     runs-on: ubuntu-latest
+  
+
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v2
+
+#       - name: Set up Python
+#         uses: actions/setup-python@v2
+#         with:
+#           python-version: 3.x
+
+#       - name: Install dependencies
+#         run: pip install requests pytz pandas python-dotenv
+
+#       - name: Send Email
+#         run: python journal.py
+
+
+
+
+
+# nahsfgoipasfo ijasoidfjoaisj 
+# asfoha osidfhoiaj foij aeio\asfpiahsdfohason
+# asfay fg abnsf
+
+name: Send Weekly Journal Emails
 on:
   schedule:
-    - cron: "0 0 * * 6" # Run every Saturday at midnight UTC
-  workflow_dispatch:
+    - cron: "0 0 * * 5" # Run every Friday at midnight UTC
 
 jobs:
-  send_email:
+  send_emails:
     runs-on: ubuntu-latest
-  
 
     steps:
       - name: Checkout repository
@@ -157,10 +189,29 @@ jobs:
           python-version: 3.x
 
       - name: Install dependencies
-        run: pip install requests pytz pandas python-dotenv
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+          pip install python-dotenv
 
-      - name: Send Email
-        run: python journal.py
+      - name: Execute Python script
+        env:
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          SPRINGER_API_KEY: ${{ secrets.SPRINGER_API_KEY }}
+        run: |
+          python send_weekly_emails.py
+
+          # Get the updated values of start and end from the output file
+          START=$(cat output.txt | awk '{print $1}')
+          END=$(cat output.txt | awk '{print $2}')
+
+          # Set the outputs for the next execution
+          echo "::set-output name=start::$START"
+          echo "::set-output name=end::$END"
+
+
+
 
 
 

@@ -464,6 +464,8 @@ for user in subscribers:
 
     # Update start and end values for the subscriber
     conn.execute("UPDATE users SET start=?, end=? WHERE email=?", (start, end, email))
+    with open("output.txt", "w") as f:
+        f.write(f"{start} {end}")
 
 # Commit changes and close the database connection
 conn.commit()
