@@ -157,7 +157,7 @@ jobs:
           python-version: 3.x
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install requests pytz pandas python-dotenv
 
       - name: Send Email
         run: python send_email.py
