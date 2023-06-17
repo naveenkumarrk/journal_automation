@@ -225,9 +225,15 @@ for user in subscribers:
                             if len(new_journals) > 0:
                                 conn.executemany("INSERT INTO journals (email, journal_name) VALUES (?, ?)", new_journals)
 
-                            start += 5
-                            end += 5
+                            if journals_sent > 0:
+                                start += journals_sent
+                                end += journals_sent
+                            else:
+                                start = 1
+                                end = 5
+
                             conn.execute("UPDATE users SET start=?, end=? WHERE email=?", (start, end, email))
+
                             
         else:
             print("Invalid or empty response from Springer API.")
