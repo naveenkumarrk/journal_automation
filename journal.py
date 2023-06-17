@@ -239,7 +239,6 @@
 
 
 
-
 import requests
 import os
 import smtplib
@@ -255,7 +254,6 @@ import logging
 load_dotenv()
 EMAIL_ADDRESS = os.environ.get("EMAIL_USER")
 EMAIL_PASSWORD = os.environ.get("EMAIL_PASS")
-
 SPRINGER_API_KEY = os.environ.get("SPRINGER_API_KEY")
 
 # Connect to the database
@@ -267,6 +265,7 @@ conn.execute('''CREATE TABLE IF NOT EXISTS journals
 
 # Configure logging
 logging.basicConfig(filename='journal.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 
 def send_email(subject, body, recipients):
     msg = EmailMessage()
@@ -283,8 +282,9 @@ def send_email(subject, body, recipients):
 
 
 def get_springer_api_url(interest, start, end):
-    url=f"https://api.springer.com/meta/v2/json?q={interest}&api_key={SPRINGER_API_KEY}&s={start}&p={end}"
+    url = f"https://api.springer.com/meta/v2/json?q={interest}&api_key={SPRINGER_API_KEY}&s={start}&p={end}"
     return url
+
 
 def get_springer_data(url):
     try:
@@ -299,8 +299,9 @@ def get_springer_data(url):
         print("Timeout Error:", errt)
     except requests.exceptions.RequestException as err:
         print("Error:", err)
-    
+
     return None
+
 
 def check_sent_journals(email, journal_name):
     cursor = conn.execute(
@@ -319,7 +320,7 @@ def save_user_details_to_csv(email, interest):
         writer.writerow([email, interest])
 
 
-# Load subscribers' email and interest from the website's database
+# Load subscribers' email and interest from the database
 subscribers = retrieve_user_data()
 
 subject = 'Automated Journal Papers According to Your Interest'
@@ -365,107 +366,105 @@ for user in subscribers:
                     # Update last sent date for the subscriber
                     conn.execute("UPDATE users SET last_sent_date=? WHERE email=?", (datetime.now(), email))
 
-        springer_api_url = get_springer_api_url(interest, start, end)
+                    body = f'''
+                        <!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                            <style>
+                                .container {{
+                                    max-width: 600px;
+                                    margin: 0 auto;
+                                    padding: 20px;
+                                }}
+                                
+                                table {{
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                }}
+                                
+                                th, td {{
+                                    padding: 8px;
+                                    border-bottom: 1px solid black;
+                                }}
+                                
+                                .journal-title {{
+                                    font-weight: 700;
+                                    margin-bottom: 5px;
+                                    font-size: 18px
+                                }}
+                                
+                                .journal-abstract {{
+                                    margin-bottom: 10px;
+                                    font-size: 16px
+                                }}
+                                
+                                a {{
+                                    text-decoration:none                        
+                                }}
+                            </style>
+                        </head>
+                        <body>
+                            <div class="container">
+                                <h1 style="color: SlateGray">
+                                    Journal Papers for Your Interest:<br> {interest} {''.join(random.choice('🔥🌟✨💡👌🙌😎🤯👍✍👈') for _ in range(3))}
+                                </h1>
+                                <h2>Springer Journals:</h2>
+                                <table>
+                                    <tbody>'''
 
-        springer_data = get_springer_data(springer_api_url)
+                    new_journals = []
+                    journals_sent = 0
 
-        if springer_data is not None and 'records' in springer_data:
-            if len(springer_data['records']) == 0:
-                start = 1
-                end = 5
-            else:
+                    for item in springer_data['records']:
+                        journal_name = item['title']
+                        link = item['url'][0]['value']
+                        abstract = item['abstract']
 
-                body = f'''
-                    <!DOCTYPE html>
-                    <html lang="en">
-                    <head>
-                        <style>
-                            .container {{
-                                max-width: 600px;
-                                margin: 0 auto;
-                                padding: 20px;
-                            }}
-                            
-                            table {{
-                                width: 100%;
-                                border-collapse: collapse;
-                            }}
-                            
-                            th, td {{
-                                padding: 8px;
-                                border-bottom: 1px solid black;
-                            }}
-                            
-                            .journal-title {{
-                                font-weight: 700;
-                                margin-bottom: 5px;
-                                font-size: 18px
-                            }}
-                            
-                            .journal-abstract {{
-                                margin-bottom: 10px;
-                                font-size: 16px
-                            }}
-                            
-                            a {{
-                                text-decoration:none                        
-                            }}
-                        </style>
-                    </head>
-                    <body>
-                        <div class="container">
-                            <h1 style="color: SlateGray">
-                                Journal Papers for Your Interest:<br> {interest} {''.join(random.choice('🔥🌟✨💡👌🙌😎🤯👍✍👈') for _ in range(3))}
-                            </h1>
-                            <h2>Springer Journals:</h2>
-                            <table>
-                                <tbody>'''
+                        if not check_sent_journals(email, journal_name):
+                            if journals_sent < 5:
+                                abstract_sentences = abstract.split('. ')
+                                abstract_paragraph = '. '.join(abstract_sentences[:2])
+                                abstract_paragraph += '.' if len(abstract_sentences) > 2 else ''
+                                body += f'''
+                                    <tr>
+                                        <td>
+                                            <div class="journal-entry">
+                                            <a href="{link}"><h3 class="journal-title">{journal_name}</h3></a>
+                                            <p class="journal-abstract">{abstract_paragraph}</p>
+                                        </div>
+                                        </td>
+                                    </tr>        '''
 
-                new_journals = []
-                journals_sent = 0
+                                new_journals.append((email, journal_name))
+                                journals_sent += 1
+                            else:
+                                break
 
-                for item in springer_data['records']:
-                    journal_name = item['title']
-                    link = item['url'][0]['value']
-                    abstract = item['abstract']
+                    body += '''
+                                    </tbody>
+                                </table>
+                            </div>
+                        </body>
+                        </html>
+                    '''
 
-                    if not check_sent_journals(email, journal_name):
-                        if journals_sent < 5:
-                            abstract_sentences = abstract.split('. ')
-                            abstract_paragraph = '. '.join(abstract_sentences[:2])
-                            abstract_paragraph += '.' if len(abstract_sentences) > 2 else ''
-                            body += f'''
-                                <tr>
-                                    <td>
-                                        <div class="journal-entry">
-                                        <a href="{link}"><h3 class="journal-title">{journal_name}</h3></a>
-                                        <p class="journal-abstract">{abstract_paragraph}</p>
-                                    </div>
-                                    </td>
-                                </tr>        '''
+                    try:
+                        send_email(subject, body, [email])
+                        logging.info(f"Email sent successfully to {email}")
+                    except Exception as e:
+                        logging.error(f"Error sending email to {email}: {str(e)}")
+                        print(f"Error sending email to {email}: {str(e)}")
 
-                            new_journals.append((email, journal_name))
-                            journals_sent += 1
-
-                body += '''
-                                </tbody>
-                            </table>
-                        </div>
-                    </body>
-                    </html>'''
-
-                if journals_sent > 0:
-                    send_email(subject, body, [email])
-
-                    # Save sent journals to the database
-                    conn.executemany("INSERT OR IGNORE INTO journals (email, journal_name) VALUES (?, ?)",
-                                     new_journals)
-
-                    # Update start and end values for the user
+                    # Update start and end values for the subscriber
                     start += 5
                     end += 5
 
-                conn.execute("UPDATE users SET start=?, end=? WHERE email=?", (start, end, email))
+                    # Save the new journals sent to the user in the database
+                    conn.executemany("INSERT OR IGNORE INTO journals (email, journal_name) VALUES (?, ?)", new_journals)
 
+    # Update start and end values for the subscriber
+    conn.execute("UPDATE users SET start=?, end=? WHERE email=?", (start, end, email))
+
+# Commit changes and close the database connection
 conn.commit()
 conn.close()
