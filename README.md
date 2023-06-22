@@ -46,6 +46,12 @@ Before running the project, ensure you have the following installed:
         
 The application should now be running at http://localhost:3000.
 
+
+4. Run the python script:
+   
+ After registering run the python in your code editor         
+ After executing the application it will send mail to the user according to their interests.
+
 ## Usage
 1.Open your web browser and navigate to http://localhost:3000.
 2.Follow the on-screen instructions to register your interests.
