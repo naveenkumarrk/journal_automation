@@ -39,7 +39,6 @@ Before running the project, ensure you have the following installed:
         EMAIL_USER=your-email@gmail.com
         EMAIL_PASS=your-email-password
         SPRINGER_API_KEY=your-springer-api-key
-        IEEE_API_KEY=your-ieee-api-key
 
 4. Start the application:
    
