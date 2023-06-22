@@ -9,21 +9,21 @@ import random
 import csv
 import logging
 
-# Load environment variables
+# env variables
 load_dotenv()
 EMAIL_ADDRESS = os.environ.get("EMAIL_USER")
 EMAIL_PASSWORD = os.environ.get("EMAIL_PASS")
 
 SPRINGER_API_KEY = os.environ.get("SPRINGER_API_KEY")
 
-# Connect to the database
+# database
 conn = sqlite3.connect('journal_emails.db')
 conn.execute('''CREATE TABLE IF NOT EXISTS users
                 (email text PRIMARY KEY, last_sent_date text, start integer, end integer, interest text)''')
 conn.execute('''CREATE TABLE IF NOT EXISTS journals
                 (email text, journal_name text, UNIQUE(email, journal_name))''')
 
-# Configure logging
+# logging
 logging.basicConfig(filename='journal.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def send_email(subject, body, recipients):
@@ -39,7 +39,7 @@ def send_email(subject, body, recipients):
         smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
         smtp.send_message(msg)
 
-
+# api generator
 def get_springer_api_url(interest, start, end):
     url=f"https://api.springer.com/meta/v2/json?q={interest}&api_key={SPRINGER_API_KEY}&s={start}&p={end}"
     return url
@@ -77,7 +77,7 @@ def save_user_details_to_csv(email, interest):
         writer.writerow([email, interest])
 
 
-# Load subscribers' email and interest from the website's database
+# user's email and interest from the database
 subscribers = retrieve_user_data()
 
 subject = 'Automated Journal Papers According to Your Interest'
@@ -108,7 +108,6 @@ for user in subscribers:
         start = result[1]
         end = result[2]
 
-        # Check if last sent date is older than one week
         if last_sent_date is None or last_sent_date < datetime.now() - timedelta(weeks=1):
             springer_api_url = get_springer_api_url(interest, start, end)
             springer_data = get_springer_data(springer_api_url)
@@ -119,8 +118,6 @@ for user in subscribers:
                     end = 5
                 else:
                     # Send email with new set of journals
-
-                    # Update last sent date for the subscriber
                     conn.execute("UPDATE users SET last_sent_date=? WHERE email=?", (datetime.now(), email))
 
         springer_api_url = get_springer_api_url(interest, start, end)
