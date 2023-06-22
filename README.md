@@ -13,9 +13,9 @@ Welcome to the Journal Recommendation System! This system sends personalized jou
 
 Before running the project, ensure you have the following installed:
 
-- Node.js (version X.X.X)
-- npm (version X.X.X)
-- SQLite (version X.X.X)
+- Node.js 
+- npm 
+- SQLite 
 - Node.js installed
 - API keys for Springer and IEEE APIs (update the `.env` file)
 - Gmail account credentials (update the `.env` file)
