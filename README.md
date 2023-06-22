@@ -13,9 +13,9 @@ Welcome to the Journal Recommendation System! This system sends personalized jou
 
 Before running the project, ensure you have the following installed:
 
-- Node.js (version X.X.X)
-- npm (version X.X.X)
-- SQLite (version X.X.X)
+- Node.js 
+- npm 
+- SQLite 
 - Node.js installed
 - API keys for Springer and IEEE APIs (update the `.env` file)
 - Gmail account credentials (update the `.env` file)
@@ -39,13 +39,18 @@ Before running the project, ensure you have the following installed:
         EMAIL_USER=your-email@gmail.com
         EMAIL_PASS=your-email-password
         SPRINGER_API_KEY=your-springer-api-key
-        IEEE_API_KEY=your-ieee-api-key
 
 4. Start the application:
    
         npm start
         
-The application should now be running at http://localhost:3000.
+   The application should now be running at http://localhost:3000.
+
+
+4. Run the python script:
+   
+ After registering run the python in your code editor         
+ After executing the application it will send mail to the user according to their interests.
 
 ## Usage
 1.Open your web browser and navigate to http://localhost:3000.
