@@ -44,7 +44,7 @@ Before running the project, ensure you have the following installed:
    
         npm start
         
-The application should now be running at http://localhost:3000.
+         The application should now be running at http://localhost:3000.
 
 
 4. Run the python script:
