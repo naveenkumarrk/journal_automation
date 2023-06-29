@@ -19,6 +19,7 @@ Before running the project, ensure you have the following installed:
 - Node.js installed
 - API keys for Springer and IEEE APIs (update the `.env` file)
 - Gmail account credentials (update the `.env` file)
+- Gmail account app passwords for EMAIL_PASS
 
 ## Installation
 
