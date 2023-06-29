@@ -231,8 +231,3 @@ for user in subscribers:
 
 conn.commit()
 conn.close()
-
-
-
-
-
