@@ -59,7 +59,9 @@ After installing the dependencies successfully run the application by
         
    After registering the users detials will be saved in the database
 
- ![Screenshot (299)](https://github.com/naveenrk7/journal_automation/assets/94048894/05b22480-5dfa-4a44-b570-1099d9a3a199)
+ 
+![Screenshot (299)](https://github.com/naveenrk7/journal_automation/assets/94048894/fd51454e-d168-4f9e-ab7b-8d085c11cf61)
+
 
 
 
