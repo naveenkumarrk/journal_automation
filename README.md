@@ -3,7 +3,7 @@
 Welcome to the Journal Recommendation System! This system sends personalized journal papers to users based on their interests.
 Here is a video to demonstrate how to run this project
 
-[<img src="https://ibb.co/LZpYnBT" width="50%">](https://youtu.be/gYiiRj4i-j4 "Journal_ai")
+(https://youtu.be/gYiiRj4i-j4)
 
 ## Features
 
