@@ -54,7 +54,7 @@ After installing the dependencies successfully run the application by
 
 The application should now be running at http://localhost:3000.
 
-![Screenshot (301)](https://github.com/naveenrk7/journal_automation/assets/94048894/89aad617-1731-4c5f-98b4-166781f0cf51)
+[<img src="![Screenshot (301)](https://github.com/naveenrk7/journal_automation/assets/94048894/89aad617-1731-4c5f-98b4-166781f0cf51)" width=50%>]
 
 
 
