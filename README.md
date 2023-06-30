@@ -1,7 +1,8 @@
 # Journal Recommendation System
 
 Welcome to the Journal Recommendation System! This system sends personalized journal papers to users based on their interests.
-Here is a video to demonstrate how to run this project
+
+Here is a video to demonstrate how to run this project is given below:
 
 [<img src="https://www.searchenginejournal.com/wp-content/uploads/2017/11/AI-email-marketing.png" width="50%">](https://youtu.be/gYiiRj4i-j4 "Journal_ai")
 
