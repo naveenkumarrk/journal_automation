@@ -23,13 +23,13 @@ Before running the project, ensure you have the following installed:
 
 ## Installation
 
-##1. Clone the repository:
+## 1. Clone the repository:
 
          git clone https://github.com/your-username/your-repo.git   
 
 or you can download it in zip format.
 
-##3. Set up environment variables:
+## 2. Set up environment variables:
 -Enter your sender's Mail_ID
 -Enter your app password
 -Then enter your Springer_API_key 
@@ -40,7 +40,7 @@ or you can download it in zip format.
         SPRINGER_API_KEY = springer-api-key(23782147123)
 
 
-##3.Install the dependencies:
+## 3.Install the dependencies:
 After updating the env file install the dependencies by entering entering the given code in server.js file terminal
 
       npm install
@@ -50,26 +50,27 @@ After installing the dependencies successfully run the application by
       npm start
 
 The application should now be running at http://localhost:3000.
+
 ![Screenshot (301)](https://github.com/naveenrk7/journal_automation/assets/94048894/89aad617-1731-4c5f-98b4-166781f0cf51)
 
 
 
 
-##4. User registration:
+## 4. User registration:
 In the application the users will enter their mail_id and thier interests
     
         npm start
         
 After registering the users detials will be saved in the database
+
 ![Screenshot (299)](https://github.com/naveenrk7/journal_automation/assets/94048894/fd51454e-d168-4f9e-ab7b-8d085c11cf61)
 
 
-
-
-##4. Run the python script:
+## 5. Run the python script:
 
 After registering run the python in your code editor         
 After executing the application it will send mail to the user according to their interests.
+
 ![Screenshot (300)](https://github.com/naveenrk7/journal_automation/assets/94048894/29084605-846a-4c32-9b58-73bbe4e5dcb9)
 
  
