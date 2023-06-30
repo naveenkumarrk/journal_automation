@@ -59,7 +59,7 @@ After installing the dependencies successfully run the application by
         
    After registering the users detials will be saved in the database
 
-   https://user-images.githubusercontent.com/94048894/250009083-05b22480-5dfa-4a44-b570-1099d9a3a199.png
+ ![Screenshot (299)](https://github.com/naveenrk7/journal_automation/assets/94048894/05b22480-5dfa-4a44-b570-1099d9a3a199)
 
 
 
