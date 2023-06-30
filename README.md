@@ -27,7 +27,7 @@ Before running the project, ensure you have the following installed:
 
    ```
    git clone https://github.com/your-username/your-repo.git
-or you can download it in zip format.
+  or you can download it in zip format.
 
 2. Set up environment variables:
 -Enter your sender's Mail_ID
@@ -51,12 +51,16 @@ After installing the dependencies successfully run the application by
 
  The application should now be running at http://localhost:3000.
 
+
 4. User registration:
    In the application the users will enter their mail_id and thier interests
     
         npm start
         
    After registering the users detials will be saved in the database
+
+   https://user-images.githubusercontent.com/94048894/250009083-05b22480-5dfa-4a44-b570-1099d9a3a199.png
+
 
 
 4. Run the python script:
