@@ -27,25 +27,36 @@ Before running the project, ensure you have the following installed:
 
    ```
    git clone https://github.com/your-username/your-repo.git
+or you can download it in zip format.
 
-2.Install the dependencies:
+2. Set up environment variables:
+-Enter your sender's Mail_ID
+-Enter your app password
+-Then enter your Springer_API_key 
+ for example
 
-        cd your-repo
-        npm install
-        
-3. Set up environment variables:
-- Create a .env file in the project root directory.
-- Add the following variables to the .env file and replace the values with your own:
- 
-        EMAIL_USER=your-email@gmail.com
-        EMAIL_PASS=your-email-password
-        SPRINGER_API_KEY=your-springer-api-key
+        EMAIL_USER = your-email@gmail.com
+        EMAIL_PASS = your_app_password
+        SPRINGER_API_KEY = springer-api-key(23782147123)
 
-4. Start the application:
-   
+
+3.Install the dependencies:
+After updating the env file install the dependencies by entering entering the given code in server.js file terminal
+
+      npm install
+
+After installing the dependencies successfully run the application by 
+
+      npm start
+
+ The application should now be running at http://localhost:3000.
+
+4. User registration:
+   In the application the users will enter their mail_id and thier interests
+    
         npm start
         
-   The application should now be running at http://localhost:3000.
+   After registering the users detials will be saved in the database
 
 
 4. Run the python script:
