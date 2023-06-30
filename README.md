@@ -1,6 +1,8 @@
 # Journal Recommendation System
 
 Welcome to the Journal Recommendation System! This system sends personalized journal papers to users based on their interests.
+Here is a video to demonstrate how to run this project
+[<img src="https://i.ytimg.com/vi/Hc79sDi3f0U/maxresdefault.jpg" width="50%">](https://youtu.be/gYiiRj4i-j4 "Journal_ai")
 
 ## Features
 
@@ -58,8 +60,6 @@ The application should now be running at http://localhost:3000.
 
 ## 4. User registration:
 In the application the users will enter their mail_id and thier interests
-    
-        npm start
         
 After registering the users detials will be saved in the database
 
