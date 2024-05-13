@@ -81,6 +81,7 @@ After executing the application it will send mail to the user according to their
 1.Open your web browser and navigate to http://localhost:3000.
 2.Follow the on-screen instructions to register your interests.
 3.You will receive weekly email updates with journal papers related to your interests.
+4.This can be implemented more in colleges and universities
 
 ## License
 This project is licensed under the MIT License.
